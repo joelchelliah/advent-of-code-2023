@@ -8,9 +8,9 @@ mod day2 {
 }
 mod day3 {
     pub mod solve1;
-    // pub mod solve2;
+    pub mod solve2;
 }
 
 fn main() {
-    day3::solve1::solve();
+    day3::solve2::solve();
 }
