@@ -19,14 +19,18 @@ mod day4 {
 mod day5 {
     pub mod solve1;
     pub mod solve2_brute_force;
-    pub mod solve2_brute_force_parallell;
+    pub mod solve2_brute_force_parallel;
     pub mod solve2_reverse;
+}
+mod day6 {
+    pub mod solve1;
+    pub mod solve2;
 }
 
 fn main() {
     let start = Instant::now();
 
-    day5::solve2_reverse::solve();
+    day6::solve2::solve();
 
     let duration = start.elapsed();
     println!("Time: {:?}", duration);
