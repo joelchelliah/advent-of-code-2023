@@ -38,11 +38,16 @@ mod day9 {
     pub mod solve1;
     pub mod solve2;
 }
+mod day10 {
+    pub mod solve1;
+    pub mod solve2;
+    pub mod solve2_picks_theorem;
+}
 
 fn main() {
     let start = Instant::now();
 
-    day9::solve2::solve();
+    day10::solve2_picks_theorem::solve();
 
     let duration = start.elapsed();
     println!("Time: {:?}", duration);
