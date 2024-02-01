@@ -57,7 +57,7 @@ pub fn solve() {
             .fold(0, |acc, number| if winning_numbers.contains(number) { acc + 1 } else { acc });
 
         // [1, 1, 1, 1]
-        let mut new_copies_of_upcoming_scratch_cards: Vec<usize> = vec![current_copies; num_matching_numbers];
+        let new_copies_of_upcoming_scratch_cards: Vec<usize> = vec![current_copies; num_matching_numbers];
 
         // [] + [1, 1, 1, 1] = [1, 1, 1, 1]
         copies_of_upcoming_scratch_cards = balance_and_combine_vectors(copies_of_upcoming_scratch_cards, new_copies_of_upcoming_scratch_cards);

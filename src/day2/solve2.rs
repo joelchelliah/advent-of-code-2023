@@ -17,7 +17,6 @@ pub fn solve() {
         // Game 4
         // 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
         let parts: Vec<&str> = line.split(":").collect();
-        let game_id: u32 = parts[0].trim().split_whitespace().nth(1).unwrap().parse().unwrap();
         let game_results = parts[1].trim().split(";").collect::<Vec<&str>>();
 
         let mut max_red: u32 = 0;
@@ -50,7 +49,7 @@ pub fn solve() {
             }
         }
 
-        sum_powers += (max_red * max_green * max_blue);
+        sum_powers += max_red * max_green * max_blue;
 
     }
 

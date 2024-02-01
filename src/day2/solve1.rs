@@ -57,7 +57,7 @@ pub fn solve() {
             }
         }
 
-        if(is_valid_game) {
+        if is_valid_game {
             sum_ids += game_id;
         }
     }

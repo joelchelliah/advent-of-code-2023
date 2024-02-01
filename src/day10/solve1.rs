@@ -137,7 +137,7 @@ pub fn solve() {
 
         let row: Vec<Tile> = line.chars().enumerate().map(|(index, char)| {
             let current_pos = (index as i32, pos.1);
-            let mut tile = match char {
+            let tile = match char {
                 '.' => create_tile(TileType::Ground, current_pos),
                 '|' => create_tile(TileType::Vertical, current_pos),
                 '-' => create_tile(TileType::Horizontal, current_pos),
