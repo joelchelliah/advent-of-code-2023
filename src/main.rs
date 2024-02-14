@@ -77,11 +77,15 @@ mod day18 {
     pub mod solve1;
     pub mod solve2;
 }
+mod day19 {
+    pub mod solve1;
+    pub mod solve2;
+}
 
 fn main() {
     let start = Instant::now();
 
-    day18::solve2::solve();
+    day19::solve2::solve();
 
     let duration = start.elapsed();
     println!("Time: {:?}", duration);
