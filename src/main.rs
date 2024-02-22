@@ -85,11 +85,16 @@ mod day20 {
     pub mod solve1;
     pub mod solve2;
 }
+mod day21 {
+    pub mod solve1;
+    pub mod solve2_brute_force;
+    pub mod solve2_geometric;
+}
 
 fn main() {
     let start = Instant::now();
 
-    day20::solve2::solve();
+    day21::solve2_geometric::solve();
 
     let duration = start.elapsed();
     println!("Time: {:?}", duration);
