@@ -102,11 +102,15 @@ mod day24 {
     pub mod solve1;
     pub mod solve2;
 }
+mod day25 {
+    pub mod solve1_brute_force;
+    pub mod solve1_kargers_algorithm;
+}
 
 fn main() {
     let start = Instant::now();
 
-    day24::solve2::solve();
+    day25::solve1_kargers_algorithm::solve();
 
     let duration = start.elapsed();
     println!("Time: {:?}", duration);
