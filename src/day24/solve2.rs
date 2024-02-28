@@ -1,5 +1,4 @@
-use std::io::{BufRead, BufReader};
-use std::fs::File;
+use crate::util::read_lines;
 
 #[derive(Clone, Debug)]
 struct HailStone {
@@ -52,10 +51,7 @@ fn get_initial_pos(pos: (f64, f64, f64), velocity: (f64, f64, f64), time: f64) -
 }
 
 pub fn solve() {
-    let file = File::open("src/day24/hailstone.txt").expect("💣");
-    let reader = BufReader::new(file);
-
-    let hailstones = reader.lines().map(|line| {
+    let hailstones = read_lines("src/day24/hailstone.txt").unwrap().map(|line| {
             let line = line.unwrap();
             let mut parts = line.split("@").map(|x| x.trim());
 

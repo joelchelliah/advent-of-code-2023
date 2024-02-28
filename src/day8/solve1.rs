@@ -1,5 +1,4 @@
-use std::io::{BufRead, BufReader};
-use std::fs::File;
+use crate::util::read_lines;
 
 struct Node {
     from: String,
@@ -12,19 +11,11 @@ fn find_node<'a>(nodes: &'a Vec<Node>, pos: &str) -> &'a Node {
 }
 
 pub fn solve() {
-    // LLR
-
-    // AAA = (BBB, BBB)
-    // BBB = (AAA, ZZZ)
-    // ZZZ = (ZZZ, ZZZ)
-    let file = File::open("src/day8/network.txt").expect("💣");
-    let reader = BufReader::new(file);
-
     let mut directions: Vec<char> = Vec::new();
     let mut nodes: Vec<Node> = Vec::new();
 
-    for line in reader.lines() {
-        let line = line.expect("Nuuuu! 💣");
+    for line in read_lines("src/day8/network.txt").unwrap() {
+        let line = line.unwrap();
         if line.trim().is_empty() {
             if nodes.is_empty() {
                 continue;
@@ -34,13 +25,10 @@ pub fn solve() {
         }
 
         if directions.is_empty() {
-            // LLR
             directions = line.chars().collect();
         } else {
             let parts: Vec<&str> = line.split("=").collect();
-            // AAA
             let from = parts[0].trim().to_string();
-            // [BBB, BBB]
             let [left, right] = {
                 let to = parts[1].trim();
                 let to = &to[1..to.len()-1].split(",").collect::<Vec<&str>>();

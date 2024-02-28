@@ -1,6 +1,6 @@
 use std::collections::HashSet;
-use std::io::{BufRead, BufReader};
-use std::fs::File;
+
+use crate::util::read_lines;
 
 type Pos = (usize, usize);
 
@@ -39,12 +39,8 @@ fn walk(map: &Vec<Vec<char>>, start: Pos, end: Pos, steps: i32, mut visited: Has
 }
 
 pub fn solve() {
-    let file = File::open("src/day23/hiking_trails.txt").expect("💣");
-    let reader = BufReader::new(file);
-
-    let map: Vec<Vec<char>> = reader.lines()
-        .map(|line| line.unwrap().chars()
-            .map(|c| c).collect()).collect();
+    let map: Vec<Vec<char>> = read_lines("src/day23/hiking_trails.txt").unwrap()
+        .map(|line| line.unwrap().chars().map(|c| c).collect()).collect();
     let start = (1, 0);
     let end = (map[0].len() - 2, map.len() - 1);
     let count = walk(&map, start, end, 0, HashSet::new());

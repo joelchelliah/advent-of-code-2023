@@ -1,20 +1,11 @@
-use std::io::{BufRead, BufReader};
-use std::fs::File;
+use crate::util::read_lines;
 
 pub fn solve() {
-    // Time:      7  15   30
-    // Distance:  9  40  200
-    let file = File::open("src/day6/record.txt").expect("💣");
-    let reader = BufReader::new(file);
-
     let mut times: Vec<i32> = Vec::new();
     let mut distances: Vec<i32> = Vec::new();
 
-    for line in reader.lines() {
-        let line = line.expect("Nuuuu! 💣");
-        if line.trim().is_empty() {
-            break;
-        }
+    for line in read_lines("src/day6/record.txt").unwrap() {
+        let line = line.unwrap();
         let line_parts: Vec<&str> = line.split(":").collect::<Vec<&str>>();
 
         if line_parts[0].starts_with("Time") {

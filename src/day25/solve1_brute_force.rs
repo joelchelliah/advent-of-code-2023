@@ -1,6 +1,5 @@
+use crate::util::read_lines;
 use std::collections::{HashMap, HashSet};
-use std::io::{BufRead, BufReader};
-use std::fs::File;
 
 fn dfs(node: &String, neighbor_map: &HashMap<String, Vec<String>>, visited: &mut HashSet<String>) {
     visited.insert(node.clone());
@@ -24,11 +23,8 @@ fn get_disconnected_group_sizes(neighbor_map: &HashMap<String, Vec<String>>) -> 
 }
 
 pub fn solve() {
-    let file = File::open("src/day25/wiring_diagram.txt").expect("💣");
-    let reader = BufReader::new(file);
-
     let mut edges: HashSet<(String, String)> = HashSet::new();
-    let neighbor_map: HashMap<String, Vec<String>> = reader.lines()
+    let neighbor_map: HashMap<String, Vec<String>> = read_lines("src/day25/wiring_diagram.txt").unwrap()
         .map(|line| line.expect("Nuuuu! 💣"))
         .map(|line| {
             let parts: Vec<&str> = line.split(":").collect();

@@ -1,5 +1,4 @@
-use std::io::{BufRead, BufReader};
-use std::fs::File;
+use crate::util::read_lines;
 
 type GroupedLabels = Vec<Vec<char>>;
 
@@ -90,22 +89,11 @@ fn score_label(label: char) -> i32 {
 }
 
 pub fn solve() {
-    // 32T3K 765
-    // T55J5 684
-    // KK677 28
-    let file = File::open("src/day7/round.txt").expect("💣");
-    let reader = BufReader::new(file);
-
     let mut hands: Vec<String> = Vec::new();
     let mut bids: Vec<i32> = Vec::new();
 
-    // 32T3K 765
-    for line in reader.lines() {
-        let line = line.expect("Nuuuu! 💣");
-        if line.trim().is_empty() {
-            break;
-        }
-
+    for line in read_lines("src/day7/round.txt").unwrap() {
+        let line = line.unwrap();
         let hand_and_bid: Vec<String> = line.split(" ").map(|s| s.to_string()).collect();
 
         hands.push(hand_and_bid[0].clone());

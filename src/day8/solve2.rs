@@ -1,5 +1,4 @@
-use std::io::{BufRead, BufReader};
-use std::fs::File;
+use crate::util::read_lines;
 
 struct Node {
     from: String,
@@ -24,19 +23,11 @@ fn lcm(a: i128, b: i128) -> i128 {
 }
 
 pub fn solve() {
-    // LLR
-
-    // AAA = (BBB, BBB)
-    // BBB = (AAA, ZZZ)
-    // ZZZ = (ZZZ, ZZZ)
-    let file = File::open("src/day8/network.txt").expect("💣");
-    let reader = BufReader::new(file);
-
     let mut directions: Vec<char> = Vec::new();
     let mut nodes: Vec<Node> = Vec::new();
 
-    for line in reader.lines() {
-        let line = line.expect("Nuuuu! 💣");
+    for line in read_lines("src/day8/network.txt").unwrap() {
+        let line = line.unwrap();
         if line.trim().is_empty() {
             if nodes.is_empty() {
                 continue;

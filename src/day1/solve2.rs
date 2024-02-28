@@ -1,32 +1,41 @@
-use std::io::{BufRead, BufReader};
-use std::fs::File;
+use std::collections::HashMap;
+
+use crate::util::read_lines;
 
 
-fn rightmost_spelled_digit_to_digit(random_characters: &str) -> u32 {
-    let valid_spelled_digits = vec!["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
-    let mut number: u32 = 0;
-
-    for (index, valid_spelled_digit) in valid_spelled_digits.iter().enumerate() {
-        if random_characters.ends_with(valid_spelled_digit) {
-            number = index as u32 + 1;
+fn rightmost_spelled_digit_to_digit(random_characters: &str, spelled_digit_map: &HashMap<&str, u32>) -> u32 {
+    for (spelled_digit, &value) in spelled_digit_map {
+        if random_characters.ends_with(spelled_digit) {
+            return value;
         }
     }
-    number
+    0
+}
+
+fn update_digits(first_digit: &mut u32, last_digit: &mut u32, digit: u32) {
+    if digit == 0 { return }
+    if *first_digit == 0 {
+        *first_digit = digit;
+    }
+    *last_digit = digit;
 }
 
 pub fn solve() {
-    let file = File::open("src/day1/calibration.txt").expect("💣");
-    let reader = BufReader::new(file);
-
-
     let mut sum: u32 = 0;
+    let spelled_digit_map: HashMap<&str, u32> = [
+        ("one", 1),
+        ("two", 2),
+        ("three", 3),
+        ("four", 4),
+        ("five", 5),
+        ("six", 6),
+        ("seven", 7),
+        ("eight", 8),
+        ("nine", 9),
+    ].iter().cloned().collect();
 
-    for line in reader.lines() {
-        let line = line.expect("Failed to read line");
-        if line.trim().is_empty() {
-            break;
-        }
-
+    for line in read_lines("src/day1/calibration.txt").unwrap() {
+        let line = line.unwrap();
         let mut first_digit: u32 = 0;
         let mut last_digit: u32 = 0;
         let mut iterated_chars = String::new();
@@ -34,26 +43,16 @@ pub fn solve() {
         for character in line.chars() {
             if character.is_digit(10) {
                 let current_digit = character.to_digit(10).unwrap();
-                if first_digit == 0 {
-                    first_digit = current_digit;
-                }
-                last_digit = current_digit;
+
+                update_digits(&mut first_digit, &mut last_digit, current_digit);
             } else {
                 iterated_chars.push(character);
-                let spelled_digit = rightmost_spelled_digit_to_digit(&iterated_chars);
-                if spelled_digit == 0 {
-                    continue;
-                }
+                let spelled_digit = rightmost_spelled_digit_to_digit(&iterated_chars, &spelled_digit_map);
 
-                if first_digit == 0 {
-                    first_digit = spelled_digit;
-                }
-                last_digit = spelled_digit;
+                update_digits(&mut first_digit, &mut last_digit, spelled_digit);
             }
         }
-        let number = first_digit * 10 + last_digit;
-
-        sum += number;
+        sum += first_digit * 10 + last_digit;
     }
 
     println!("Sum: {}", sum);

@@ -1,43 +1,20 @@
-use std::io::{BufRead, BufReader};
-use std::fs::File;
+use crate::util::read_lines;
 
 pub fn solve() {
-    let file = File::open("src/day2/games.txt").expect("💣");
-    let reader = BufReader::new(file);
-
     let mut sum_powers: u32 = 0;
 
-    // Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
-    for line in reader.lines() {
-        let line = line.expect("Failed to read line");
-        if line.trim().is_empty() {
-            break;
-        }
-
-        // Game 4
-        // 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
-        let parts: Vec<&str> = line.split(":").collect();
-        let game_results = parts[1].trim().split(";").collect::<Vec<&str>>();
+    for line in read_lines("src/day2/games.txt").unwrap() {
+        let line = line.unwrap();
+        let game_results = line.split_once(":").unwrap().1.split(";");
 
         let mut max_red: u32 = 0;
         let mut max_green: u32 = 0;
         let mut max_blue: u32 = 0;
 
-        // 1 green, 3 red, 6 blue
-        // 3 green, 6 red
-        // 3 green, 15 blue, 14 red
-        for game_part in game_results {
-
-            // 1 green
-            // 3 red
-            // 6 blue
-            for cube_count in game_part.split(",").collect::<Vec<&str>>() {
-                let num_and_color: Vec<&str> = cube_count.trim().split(" ").collect();
-                let [num_string, color] = match num_and_color.as_slice() {
-                    [num_string, color] => [num_string.trim(), color.trim()],
-                    _ => panic!("Destructuring failed! 💣"),
-                };
-                let num = num_string.parse::<u32>().unwrap();
+        for result in game_results {
+            for cube_count in result.split(",") {
+                let (num, color) = cube_count.trim().split_once(" ").unwrap();
+                let num = num.trim().parse::<u32>().unwrap();
 
                 if color == "red" && num > max_red {
                     max_red = num;
@@ -48,10 +25,8 @@ pub fn solve() {
                 }
             }
         }
-
         sum_powers += max_red * max_green * max_blue;
 
     }
-
     println!("Sum: {}", sum_powers);
 }

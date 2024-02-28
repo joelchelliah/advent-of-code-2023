@@ -2,6 +2,8 @@
 
 use std::time::Instant;
 
+pub mod util;
+
 mod day1 {
     pub mod solve1;
     pub mod solve2;

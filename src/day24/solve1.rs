@@ -1,5 +1,4 @@
-use std::io::{BufRead, BufReader};
-use std::fs::File;
+use crate::util::read_lines;
 
 struct HailStone {
     pos: (isize, isize, isize),
@@ -34,10 +33,7 @@ fn parse_coords(coords: &str) -> (isize, isize, isize) {
 }
 
 pub fn solve() {
-    let file = File::open("src/day24/hailstone.txt").expect("💣");
-    let reader = BufReader::new(file);
-
-    let hailstones = reader.lines().map(|line| {
+    let hailstones = read_lines("src/day24/hailstone.txt").unwrap().map(|line| {
             let line = line.unwrap();
             let mut parts = line.split("@").map(|x| x.trim());
 

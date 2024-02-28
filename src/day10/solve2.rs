@@ -1,5 +1,4 @@
-use std::io::{BufRead, BufReader};
-use std::fs::File;
+use crate::util::read_lines;
 
 #[derive(PartialEq)]
 #[derive(Clone)]
@@ -168,12 +167,6 @@ fn count_relevant_tiles(tiles: &Vec<Tile>, straight_tile_type: TileType) -> i32 
 }
 
 pub fn solve() {
-    // ..F7.
-    // .FJ|.
-    // SJ.L7
-    let file = File::open("src/day10/pipes.txt").expect("💣");
-    let reader = BufReader::new(file);
-
     let mut map: Vec<Vec<Tile>> = Vec::new();
     let mut pos = (0, 0);
     let mut start_tile = Tile {
@@ -181,12 +174,8 @@ pub fn solve() {
         pos: (0, 0),
     };
 
-    for line in reader.lines() {
-        let line = line.expect("Nuuuu! 💣");
-        if line.trim().is_empty() {
-            break;
-        }
-
+    for line in read_lines("src/day10/pipes.txt").unwrap() {
+        let line = line.unwrap();
         let row: Vec<Tile> = line.chars().enumerate().map(|(index, char)| {
             let current_pos = (index as i32, pos.1);
             let tile = match char {

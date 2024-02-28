@@ -1,5 +1,4 @@
-use std::io::{BufRead, BufReader};
-use std::fs::File;
+use crate::util::read_lines;
 
 struct PositionedPartNumber {
     pos: (usize, usize),
@@ -18,34 +17,15 @@ fn create_and_store_new_positioned_part_number(current_part_number: String, posi
 }
 
 pub fn solve() {
-    // 467..114..
-    // ...*......
-    // ..35..633.
-    // ......#...
-    let file = File::open("src/day3/schematic.txt").expect("💣");
-    let reader = BufReader::new(file);
-
     let mut y_pos = 0;
-
-    // {pos: (0,0), number: 467}
-    // {pos: (0,5), number: 114}
     let mut positioned_part_numbers: Vec<PositionedPartNumber> = Vec::new();
-
-    // [(3,1)]
     let mut symbol_positions: Vec<(usize, usize)> = Vec::new();
-
     let mut sum_part_numbers: u32 = 0;
 
-    // 467..114..
-    for line in reader.lines() {
-        let line = line.expect("Nuuuu! 💣");
-        if line.trim().is_empty() {
-            break;
-        }
 
+    for line in read_lines("src/day3/schematic.txt").unwrap() {
+        let line = line.unwrap();
         let mut x_pos = 0;
-
-        // 467
         let mut current_part_number = String::new();
 
         for character in line.chars() {

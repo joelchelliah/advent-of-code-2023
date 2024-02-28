@@ -1,6 +1,5 @@
-use std::{cmp::min, cmp::max, collections::{hash_map::Entry::{Occupied, Vacant}, HashMap, HashSet}};
-use std::io::{BufRead, BufReader};
-use std::fs::File;
+use crate::util::read_lines;
+use std::{cmp::min, cmp::max, collections::{hash_map::Entry::{Occupied, Vacant}, HashMap}};
 use rand::Rng;
 
 
@@ -22,7 +21,7 @@ fn get_or_set_index_of_node(
     (index, is_new)
 }
 
-fn init_nodes_and_get_initial_edges(lines: std::io::Lines<BufReader<File>>) -> (Vec<i32>, Vec<(usize, usize)>) {
+fn init_nodes_and_get_initial_edges(lines: &mut dyn Iterator<Item = std::io::Result<String>>) -> (Vec<i32>, Vec<(usize, usize)>) {
     let mut indexes_by_name = HashMap::<String, usize>::new();
     let mut next_index = 0;
 
@@ -69,12 +68,11 @@ fn clean_up_edges(edges: &mut Vec<(usize, usize)>, node_a: usize, node_b: usize)
 }
 
 pub fn solve() {
-    let file = File::open("src/day25/wiring_diagram.txt").expect("💣");
-    let reader = BufReader::new(file);
+    let mut lines = read_lines("src/day25/wiring_diagram.txt").unwrap();
     let (
         mut node_merge_counts,
         initial_edges
-    ) = init_nodes_and_get_initial_edges(reader.lines());
+    ) = init_nodes_and_get_initial_edges(&mut lines);
 
     let mut rng = rand::thread_rng();
     let mut edges = Vec::new();

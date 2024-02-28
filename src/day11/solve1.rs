@@ -1,14 +1,7 @@
-use std::io::{BufRead, BufReader};
-use std::fs::File;
+use crate::util::read_lines;
 
 pub fn solve() {
-    // ...#......
-    // .......#..
-    // #.........
-    let file = File::open("src/day11/image.txt").expect("💣");
-    let reader = BufReader::new(file);
-
-    let universe: Vec<Vec<char>> = reader.lines().map(|line| {
+    let universe: Vec<Vec<char>> = read_lines("src/day11/image.txt").unwrap().map(|line| {
         line.expect("Booom! 💣").chars().collect()
     }).collect();
 
